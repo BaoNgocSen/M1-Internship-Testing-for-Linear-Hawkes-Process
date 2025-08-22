@@ -58,9 +58,7 @@ class thinning_hawkes(object):
                     for tk in self.Process
                 )
                 
-                # Sửa lỗi: Cần một cận trên hợp lệ cho cường độ.
-                # Cường độ tại t_candidate có thể lớn hơn lam_current.
-                # upper_intensity = lam_current + self.alpha là một cận trên an toàn.
+            
                 upper_intensity = lam_current + self.alpha
                 
                 if upper_intensity <= 0:
@@ -100,7 +98,7 @@ class thinning_hawkes(object):
                 if t_candidate >= self.T:
                     break
                 
-                # Với box kernel, cường độ là hằng số, nên sự kiện luôn được chấp nhận
+
                 self.Process.append(t_candidate)
                 current_t = t_candidate
         
