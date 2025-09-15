@@ -58,7 +58,7 @@ class thinning_hawkes(object):
                     for tk in self.Process
                 )
                 
-            
+     
                 upper_intensity = lam_current + self.alpha
                 
                 if upper_intensity <= 0:
@@ -84,24 +84,29 @@ class thinning_hawkes(object):
                     current_t = t_candidate
                     
             if self.kernel_type == 'box':
-                # Thêm kernel hình hộp
                 num_active_events = sum(1 for tk in self.Process if (current_t - tk) < self.beta)
                 upper_intensity = self.mu + num_active_events * self.alpha
-                
+
                 if upper_intensity <= 0:
                     current_t = self.T
                     break
-                
+
                 w = -np.log(np.random.uniform(0, 1)) / upper_intensity
                 t_candidate = current_t + w
-                
+
                 if t_candidate >= self.T:
                     break
-                
 
-                self.Process.append(t_candidate)
+      
+                num_active_at_cand = sum(1 for tk in self.Process if (t_candidate - tk) < self.beta)
+                true_intensity = self.mu + num_active_at_cand * self.alpha
+
+
+                if np.random.uniform(0, 1) <= (true_intensity / upper_intensity):
+                    self.Process.append(t_candidate)
+
                 current_t = t_candidate
-        
+
         return self.Process
 
     def intensity_at_t(self, t):

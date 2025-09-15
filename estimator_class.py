@@ -4,7 +4,7 @@ from scipy.optimize import minimize
 from scipy.stats import norm
 import numdifftools as nd  # pip install numdifftools
 
-def estimate_hawkes_params(timestamps, T):
+def estimate_hawkes_params_(timestamps, T):
     def neg_log_likelihood(params):
         mu, alpha, beta = params
         if mu <= 0 or alpha < 0 or beta <= 0:
@@ -49,7 +49,7 @@ def estimate_hawkes_params(timestamps, T):
     return -res.fun, mu_hat, alpha_hat, beta_hat, variance
 
 
-def hawkes_test(N_T, T, mu, alpha, beta, alpha_level=0.05):
+def hawkes_test_(N_T, T, mu, alpha, beta, alpha_level=0.05):
    
     eta = alpha / beta
     z_q =  norm.ppf(1 - alpha_level / 2)
@@ -64,7 +64,7 @@ def hawkes_test(N_T, T, mu, alpha, beta, alpha_level=0.05):
     else:
         return 1 #print("On peut rejette H0")
 
-def hawkes_test2(T,Realite, Estimateur,variance, alpha_level=0.05):
+def hawkes_test2_(T,Realite, Estimateur,variance, alpha_level=0.05):
 
     z_q =  norm.ppf(1 - alpha_level / 2)
 
@@ -76,7 +76,7 @@ def hawkes_test2(T,Realite, Estimateur,variance, alpha_level=0.05):
     else:
         return 1 #print("On peut rejette H0")
 
-def hawkes_test3(N_T, T, mu, alpha, beta, variance, alpha_level=0.05):
+def hawkes_test3_(N_T, T, mu, alpha, beta, variance, alpha_level=0.05):
    
     eta = alpha / beta
     z_q =  norm.ppf(1 - alpha_level / 2)
